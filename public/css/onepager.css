@@ -1,0 +1,7 @@
+.current-menu-item a.active{
+	/*
+	you can choose a different color,
+	e.g. using https://htmlcolorcodes.com/color-picker/
+	*/
+	color: #ee0000!important;
+}
