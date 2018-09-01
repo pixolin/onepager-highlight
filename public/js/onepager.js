@@ -1,4 +1,5 @@
 jQuery( document ).ready( function( $ ) {
+	$( '.current-menu-item' ).addClass( 'current-menu-initial' );
 	// On Click
 	$( 'a[href*="#"]' ).on( 'click', function( e ){
 		const linktHref = this.href.split( '#' );
@@ -39,8 +40,8 @@ jQuery( document ).ready( function( $ ) {
 	 * than reapply to clicked menu item
 	 */
 	function toggleClass( node ) {
-		$( '.current-menu-item a[href*="#"]' ).removeClass( 'active' );
-		$( node ).addClass( 'active' );
+		$( '.current-menu-item' ).removeClass( 'current-menu-item current-menu-initial' );
+		$( node ).parent().addClass( 'current-menu-item' );
 	}
 
 } );
