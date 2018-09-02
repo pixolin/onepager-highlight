@@ -1,5 +1,7 @@
 jQuery( document ).ready( function( $ ) {
-	$( '.current-menu-item' ).addClass( 'current-menu-initial' );
+	$( '.menu' ).each(function(){
+		$(this).find('.current-menu-item').eq(0).addClass('current-menu-initial' );
+	});
 	// On Click
 	$( 'a[href*="#"]' ).on( 'click', function( e ){
 		const linktHref = this.href.split( '#' );
