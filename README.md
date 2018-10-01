@@ -3,7 +3,7 @@
 **Tags:** nav menu, onepager  
 **Requires at least:** 4.5  
 **Tested up to:** 4.9.8  
-**Stable tag:** 0.2.0  
+**Stable tag:** 0.3.0  
 **License:** GPLv2 or later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -11,14 +11,19 @@ Highlights only current nav menu item for activated section in Onepager
 
 ## Description ##
 
-WordPress automatically adds a CSS class `.current-menu-item` to the menu item of the navigation menu that links to the current page. For normal websites, where the menu links to different webpages, this is a nice function. With onepagers however, it is irritating when the links to _all_ sections are highlighted at once, as they are all on the same web page.
+By default, WordPress adds a CSS class `.current-menu-item` to all menu items of your navigation menu, that link to the current webpage. That is not desired, if you want to use a navigation menu with several links to sections within the same page (typically for a onepager).
 
-This plugin removes the CSS class `.current-menu-item` from all links in the menu, _except the first_. If you click on a link to another link, the class gets added to this link. As a result, only the clicked link of the section gets highlighted.
+This plugin
 
-Additionally the plugin also adds a smooth scrolling animation to the links.
+* uses some JavaScript magic to keep the CSS class `.current-menu-item` only for the *first* link in the menu,
+* adds a smooth scrolling animation to slide (not jump) to sections of the website and
+* highlights the link to the currently displayed section for better orientation.
+
+To use the plugin, first create your onepager webpage and add IDs to your sections in text mode of your editor, e.g. `<h2 id="summary">Summary</h2>`. Then go to design > menus and create a menu with individual links, e.g. `https://example.com/onepager#summary`.
 
 ## To do
-Switch classes when scrolling to other sections (handy for sticky menus).
+
+Add customizer settings to alter scrolling speed and menu height.
 
 ## Installation ##
 
@@ -36,7 +41,15 @@ Check if your theme highlights current menu items at all. If not, you may want t
   color: red !important;
 }`
 
+### I added anchors to sections of my web page, but the menu doesn't change when I scroll down ###
+
+Make sure to add an ID to your sections, e.g. `<h2 id="summary">`. The JavaScript function of the plugin searches for corresponding IDs, not anchor names. Therefore, the menu highlighting **won't** work, if you just add anchors with names (e.g. `<a name="summary">Summary</a>`).
+
+
 ## Changelog ##
+
+### 0.3.0 ###
+Adds JavaScript function to highlight menu items when scrolling to sections.
 
 ### 0.2.0 ###
 CSS class `.current-menu-item` only gets assigned to one menu item.

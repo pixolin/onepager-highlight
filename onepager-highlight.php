@@ -7,7 +7,7 @@
  * Author URI:      https://pixolin.de
  * Text Domain:     onepager-highlight
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         0.3.0
  * License:         GPLv2 or later
  *
  * @package         Onepager_Highlight
