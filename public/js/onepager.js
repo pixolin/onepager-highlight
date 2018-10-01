@@ -1,48 +1,59 @@
 jQuery( document ).ready( function( $ ) {
-	// $('.current-menu-item').slice(1).removeClass('current-menu-item');
-	$( '.current-menu-item' ).not( ':first-child' ).removeClass('current-menu-item');
-	// On Click
-	$( 'a[href*="#"]' ).on( 'click', function( e ){
-		const linktHref = this.href.split( '#' );
-		const href = $( '#' + linktHref[1] );
 
-		toggleClass( this );
+	// currentmenulinks  = Links for menu entries with class .current-menu-item
+	// menulinkstoanchor = Links to anchor in nav menu
+	// linkstoanchor     = Links to anchor, anywhere on the page
 
-		/*
-		 * Smooth scroll animation
-		 */
-		$( 'html, body' ).animate( {
-			scrollTop: $( href ).offset().top
-		}, 'slow', 'linear' );
-		e.preventDefault();
-	} );
+	var currentmenulinks    = $( '.current-menu-item a[href*="#"]' ).length,
+		menulinkstoanchor   = $( '.menu-item a[href*="#"]' ),
+		linkstoanchor       = $( 'a[href*="#"]' ),
+		header              = 230; // To do: pass variable from customizer settings
 
-	// Scroll Animation
-	$( function () {
-		// Set our scroll state after dom ready
-		$( window ).scroll();
-	} );
+	// check, if menu has multiple links to anchors with class .current-menu-item
+	// we only want one menu item to be highlighted
+	if ( 0 < currentmenulinks ) {
 
-	$( window ).scroll( function() {
-		// Get the current vertical position of the scroll bar
-		const position = $( this ).scrollTop();
-		const offset = 150;
-
-		$( '.current-menu-item a[href*="#"]' ).each( function () {
-			const menuItem = this.href.split( '#' );
-			const menuHref = '#' + menuItem[1];
-			const target = $( menuHref ).offset().top;
-			if ( position >= target - offset ) toggleClass( this );
-		} );
-	});
-
-	/*
-	 * Remove class .active from links,
-	 * than reapply to clicked menu item
-	 */
-	function toggleClass( node ) {
-		$( '.current-menu-item' ).removeClass( 'current-menu-item current-menu-initial' );
-		$( node ).parent().addClass( 'current-menu-item' );
+		// Let only first menu element have CSS class .current-menu-item and .first-current
+		$( '.current-menu-item' ).not( ':first-child' ).toggleClass( 'current-menu-item' );
 	}
 
-} );
+
+	// On click, softly scroll to anchor and toggle .current-menu-item
+	linkstoanchor.on( 'click', function( event ) {
+		var linktHref = this.href.split( '#' ),
+			href      = $( '#' + linktHref[1]);
+
+		if ( linktHref[1]) {
+			$( 'html, body' ).animate({
+				scrollTop: $( href ).offset().top - header
+			}, 'slow' );
+		} else {
+			$( 'html, body' ).animate({
+					scrollTop: 0
+			}, 'slow' );
+		}
+
+		// Toggle class .current-menu-item
+		$( '.menu-item' ).removeClass( 'current-menu-item' );
+		$( this ).parent().addClass( 'current-menu-item' );
+
+		event.preventDefault();
+		return false;
+	});
+
+
+	$( window ).scroll( function() {
+
+		menulinkstoanchor.each( function() {
+			var linktHref = this.href.split( '#' );
+			if ( linktHref[1].length ) {
+				if ( $( window ).scrollTop() >= ( $( '#' + linktHref[1] ).offset().top - header - 1) ) {
+					$( '.menu-item' ).removeClass( 'current-menu-item' );
+					$( this ).parent().addClass( 'current-menu-item' );
+				}
+			}
+
+		});
+	});
+
+});
